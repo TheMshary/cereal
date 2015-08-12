@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Testing template</title>
+</head>
+<body>
+	<ul>
+		{% for manufacturer in manufacturers %}
+			<li>{{ manufacturer.name }}</li>
+			<ul>
+				{% for cereal in manufacturer.cereal_set.all %}
+					<li>{{ cereal.name }}</li>
+				{% endfor %}
+			</ul>
+		{% endfor %}
+	</ul>
+</body>
+</html>

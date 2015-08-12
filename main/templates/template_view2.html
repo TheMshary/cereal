@@ -1,0 +1,162 @@
+	{% load staticfiles %}
+
+<!DOCTYPE html>  
+<html>  
+<head>
+	<title>Template View 2</title> 
+	<script src="{% static 'js/jquery-1.11.3.min.js' %}" ></script>
+	<script src="{% static 'js/bootstrap.min.js' %}" ></script>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+
+</head>  
+<body>
+	<div class="container">
+		<div class="row">
+		{% for man, cereals in manufacturer_cereal.items %}
+			<div class="col-md-6">
+				<div id="{{ man.pk }}" onmouseover="tog2({{ man.pk }}, 1)" onmouseout="tog2({{ man.pk }}, 0)">
+				<h4 class="man_title">{{ man.name }}</h4>
+
+
+				<div class="cereals" data-i="hey {{ man.pk }} " id="cereals{{ man.pk }}">
+				{% for cereal in cereals %}
+					<div id="{{ cereal.pk }}" onmouseover="tog({{ cereal.pk }}, 1, {{ man.pk }})" onmouseout="tog({{ cereal.pk }}, 0, {{ man.pk }})">
+					<a href="/cereal_detail/{{ cereal.pk }}/" class="cereal{{ cereal.pk }}">{{ cereal.name }}</a></br>
+					<ul class="stuffs" id="list{{ cereal.pk }}">
+						<li><b>Manufacturer:</b> {{ man }}</li>
+						{% for fact in cereal.nutritionfacts.list %}
+							<li>{{ fact }}</li>
+						{% endfor %}
+					</ul>
+					</div>
+				{% endfor %}
+				</div>
+
+
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('body').css('background-color','cyan').css('color','darkblue');
+		$('.stuffs').hide();
+		$('.cereals').hide();
+
+		$('.cereal').on('mouseover', function(e) {
+			$('.stuffs').toggle();
+			
+		});
+		// $('h4').on('click', function() {
+		// 	$.ajax({
+		// 		url: "/ajax",
+		// 		context: document.body,
+		// 		data: {
+	 //      			format: 'json'
+	 //   			},
+	 //   			success: function(data) {
+	 //   				console.log(data);
+	 //   			}
+		// 	});
+		// });
+
+	});
+
+	function tog(pk, option, parentpk) {
+		if(option == 1) {
+			$('#list'+pk).show();
+			$('#'+pk).css('border', '1px black solid').css('border-radius','10px').css('padding', '10px');
+			$('.cereal'+pk).css('font-size','200%');
+			$('#'+parentpk).css('border','none !important;');	// Why does this not override the existing border?????
+			console.log("parentpk = "+parentpk);
+			//tog2(parentpk, 0);
+		} else {
+			$('#list'+pk).hide();
+			$('#'+pk).css('border', 'none').css('padding','0px');
+			$('.cereal'+pk).css('font-size','100%');
+			$('#'+parentpk).css('border', '1px black dotted').css('border-radius','10px').css('padding', '10px');
+			//tog2(parentpk, 1);
+		}
+	}
+
+	function tog2(pk, option) {
+		if(option == 1) {
+			console.log("pk = "+pk);
+			$('#cereals'+pk).show();
+			$('#'+pk).css('border', '1px blue solid').css('border-radius','10px').css('padding', '10px');
+		} else {
+			$('#cereals'+pk).hide();
+			$('#'+pk).css('border', 'none').css('padding','0px');
+		}
+		console.log('running..'); // Does this run more than once while cursor is inside the big_div?
+	}
+
+</script>
+
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

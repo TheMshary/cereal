@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+	<style>
+    	div {
+    		margin: 0 auto;
+    		width: 55%;
+    	}
+
+    	#search {
+    		margin: 0 auto;
+    		width: 40%;
+    	}
+
+    	td {
+    		text-align: center;
+    	}
+
+    	.border {
+    		border: 1px black solid;
+    	}
+
+	</style>
+
+	<div id="search">
+	<form action="/actual_post_manufacturer_search/" method="POST">
+	<b>Search cereals via Manufacturer (enter manufacturer name):</b></br>
+	<input type="text" name="name"/>
+	<input type="submit" value="Submit me!"/>
+	</form>
+	</div>
+
+	<div><table>
+	<th class="border">Manufacturer</th><th class="border">Cereal</th><th class="border">Nutrition Facts</th>
+	{% for manufacturer in manufacturers %}
+        {% for cereal in manufacturer.cereal_set.all %}
+        	<tr>
+        		<td class="border">{{ manufacturer }}</td>
+            	<td class="border">{{ cereal.name }}</td>
+            	<td class="border">
+	            	<table><tr>
+	            	<td>has {{ cereal.nutritionfacts.calories }} calories</td>
+	            	<td>protein: {{ cereal.nutritionfacts.protein }}g</td>
+	            	<td>carbs: {{ cereal.nutritionfacts.carbs }}g</td>
+	            	<td>fat: {{ cereal.nutritionfacts.fat }}g</td>
+	            	</tr></table>
+	            </td>
+
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </table></div>
+{% endblock %}
