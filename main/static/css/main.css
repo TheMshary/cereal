@@ -1,0 +1,17 @@
+body {
+	background-color: orange;
+}
+
+.btn-primary {
+	text-transform: uppercase;
+	border-radius: 30px;
+	color: #000;
+	background-color: #3077A5;
+	border-color: #3077A5;
+}
+
+.btn-primary:focus,
+.btn-primary:hover {
+	background-color: #5299c7;
+	border-color: #5299c7;
+}
