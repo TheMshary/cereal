@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'cereal', 
         'HOST': '127.0.0.1', 
         'USER': 'root', 
-        'PASSWORD': 'Anonymous3', 
+        'PASSWORD': 'reapak', 
         'PORT': ''
     }
 }
