@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+	<input id="search" type="text" name="search">
+
+	<p id="results"></p>
+
+	<script type="text/javascript">
+	$('#search').on('keyup', function() {
+		console.log("key pressed");
+		query = $('#search').val();
+		$.ajax(
+			{
+				type: 'GET',
+				url: '/json_response',
+				data: { search:query },
+				error: function() { console.log('error'); },
+				success: function(data) { $('#results').text(data); },
+			}
+		);
+	});
+	</script>
+
+{% endblock %}

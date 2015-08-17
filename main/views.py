@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
-
+from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
@@ -285,10 +285,25 @@ def logout_view(request):
 	return HttpResponseRedirect('/login/')
 
 
+def ajax_search(request):
+	context = {}
 
+	return render_to_response('ajax_search.html', context, context_instance=RequestContext(request))
 
+def json_response(request):
+	#get string from GET dictionary
+	search_string = request.GET.get('search', '')
+	#filter icontains search string
+	cereals = Cereal.objects.filter(name__icontains=search_string)
+	#empty cereal list
+	cereal_list = []
+	#for loop cereals
+		#append cereal names to cereal list
+	for cereal in cereals:
+		cereal_list.append(cereal.name)
 
-
+	return JsonResponse(cereal_list, safe=False)
+	#return json
 
 
 
@@ -300,10 +315,14 @@ def logout_view(request):
 
 #============================ testing ======================================#
 
-def testing(request):
-
-
-	return render_to_response('testing.html', {'manufacturers':Manufacturer.objects.all()}, context_instance=RequestContext(request))
+def testing(request,name):
+	json_list = []
+	obj = Cereal.objects.filter(name__istartswith=name)
+	for cereal in  obj:
+		json_list.append({'cereal_name':cereal.name,"manufacturer":{"name":cereal.manufacturer.name}})
+	#data = serializers.serialize('json', Cereal.objects.filter(name__istartswith=name))
+	return HttpResponse(json.dumps(json_list), content_type="application/json")
+	#return render_to_response('testing.html', {'manufacturers':Manufacturer.objects.all()}, context_instance=RequestContext(request))
 
 
 

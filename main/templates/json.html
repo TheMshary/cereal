@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block body %}
+
+	<form action="/json_search/" method="POST">
+		{% csrf_token %}
+		<input type="text" name="query">
+		<input type="submit" value="Search">
+	</form>
+
+{% endblock %}

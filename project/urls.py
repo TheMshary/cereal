@@ -36,7 +36,10 @@ urlpatterns = [
     url(r'^cereal_create/$','main.views.cereal_create'),
     url(r'^signup/(?P<registrationpage>\d+)/$','main.views.signup'),
     url(r'^signup/$','main.views.signup'),
-    url(r'^testing/$','main.views.testing'),
+    url(r'^testing/(?P<name>\w+)/$','main.views.testing'),
     url(r'^login/$','main.views.login_view'),
     url(r'^logout/$','main.views.logout_view'),
+    
+    url(r'^json_response/$','main.views.json_response'),
+    url(r'^ajax_search/$','main.views.ajax_search'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
